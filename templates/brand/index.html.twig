@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Brand index{% endblock %}
+
+{% block body %}
+    <h1>Toutes les marques</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for brand in brands %}
+            <tr>
+                <td>{{ brand.id }}</td>
+                <td>{{ brand.name }}</td>
+                <td>{{ brand.createdAt ? brand.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_brand_show', {'id': brand.id}) }}">show</a>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('app_brand_edit', {'id': brand.id}) }}">edit</a>
+                        <a href="{{ path('app_brand_delete', {'id': brand.id}) }}">delete</a>
+                    {% endif %}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_brand_new') }}">Create new</a>
+    {% endif %}
+
+    <style>
+        input {
+            float: right;
+        }
+        table {
+            font-family: "Times New Roman", Times, serif;
+            border: 1px solid #FFFFFF;
+            width: 100%;
+            height: 200px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        table td, table th {
+            border: 1px solid #FFFFFF;
+            padding: 3px 2px;
+        }
+        table tbody td:last-child {
+            display: flex;
+            justify-content: space-evenly;
+            font-size: 13px;
+        }
+        table tr:nth-child(even) {
+            background: #D0E4F5;
+        }
+        table thead {
+            background: #0B6FA4;
+            border-bottom: 5px solid #FFFFFF;
+        }
+        table thead th {
+            font-size: 17px;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            border-left: 2px solid #FFFFFF;
+        }
+        table thead th:first-child {
+            border-left: none;
+        }
+
+        table tfoot {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333333;
+            background: #D0E4F5;
+            border-top: 3px solid #444444;
+        }
+        table tfoot td {
+            font-size: 14px;
+        }
+
+    </style>
+
+{% endblock %}

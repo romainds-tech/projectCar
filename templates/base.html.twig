@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+
+    <nav>
+        <a href={{ path('app_home') }}>Home</a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href={{ path('app_logout') }}>Déconnexion</a>
+        {% endif %}
+
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href={{ path('app_login') }}>Connexion</a>
+            <a href={{ path('app_register') }}>S'enregistrer</a>
+        {% endif %}
+    </nav>
+
+        {% block body %}
+
+            <div class="container">
+
+                Bienvenue sur le site des voitures. <br>
+                Vous pouvez consulter les voitures librement <br>
+                Vous devez être connecté pour pouvoir : Ajouter, modifier ou supprimer une voiture <br>
+                Pour vous connecter : <a href={{ path('app_login') }}>Connexion</a> <br>
+                Pour vous enregistrer : <a href={{ path('app_register') }}>S'enregistrer</a> <br>
+                Voici toutes les voitures que nous avons en stock (bdd, pas à vendre). <br>
+
+                <a class="seeCars" href={{ path('app_car_index') }}>Voir les voitures</a>
+                <a class="seeCars" href={{ path('app_brand_index') }}>Voir les marques</a>
+
+            </div>
+
+        {% endblock %}
+    </body>
+</html>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 75px;
+        background-color: #1a1a1a;
+    }
+
+    .container{
+        padding: 20px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+    }
+
+    nav a:hover {
+        color: #ff0000;
+    }
+
+    .seeCars{
+        display: block;
+        margin-top: 50px;
+        width: 200px;
+        padding: 10px 20px;
+        background-color: #1a1a1a;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+    }
+
+</style>

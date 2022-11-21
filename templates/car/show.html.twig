@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car{% endblock %}
+
+{% block body %}
+
+    <a class="backToList" href="{{ path('app_car_index') }}">back to list</a>
+
+
+    <div class="contentShow">
+
+        <h1>Car</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ car.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ car.name }}</td>
+                </tr>
+                <tr>
+                    <th>HorsePower</th>
+                    <td>{{ car.horsePower }}</td>
+                </tr>
+                <tr>
+                    <th>ImageUrl</th>
+                    <td>{{ car.imageUrl }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_car_edit', {'id': car.id}) }}">edit</a>
+        <a href="{{ path('app_car_delete', {'id': car.id}) }}">delete</a>
+    {% endif %}
+
+    <style>
+        .backToList {
+            display: block;
+            padding: 20px;
+        }
+        .contentShow{
+            padding: 50px;
+        }
+</style>
+{% endblock %}
+
